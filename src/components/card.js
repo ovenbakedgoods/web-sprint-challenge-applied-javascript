@@ -70,8 +70,8 @@ const cardAppender = (selector) => {
   // Append each card to the element in the DOM that matches the selector passed to the function.
   //
   const entryPoint = document.querySelector(selector)
-  console.log(document.body.querySelector(selector))
-  console.log(entryPoint)
+  //console.log(document.body.querySelector(selector))
+  //console.log(entryPoint)
   var sortable = [];
   axios
     .get(`https://lambda-times-api.herokuapp.com/articles`)
