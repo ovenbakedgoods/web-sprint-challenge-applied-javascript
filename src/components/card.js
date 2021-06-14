@@ -1,3 +1,4 @@
+import axios from 'axios'
 const Card = (article) => {
   // TASK 5
   // ---------------------
@@ -17,6 +18,46 @@ const Card = (article) => {
   //   </div>
   // </div>
   //
+//console.log(article)
+  //article.forEach(e => {
+    
+    
+    //console.log(e)
+   // e[1].forEach(x => {
+     //console.log(article)
+      const card = document.createElement('div')
+      const headLine = document.createElement('div')
+      const author = document.createElement('div')
+      const imgCon = document.createElement('div')
+      const authorimg = document.createElement('img')
+      const authorname = document.createElement('span')
+
+      card.appendChild(headLine)
+      card.appendChild(author)
+      author.appendChild(imgCon)
+      imgCon.appendChild(authorimg)
+      author.appendChild(authorname)
+
+      card.classList.add('card')
+      headLine.classList.add('headline')
+      author.classList.add('author')
+      imgCon.classList.add('img-container')
+      //console.log(article)
+      authorimg.setAttribute('src', article.authorPhoto)
+      //console.log(article.headline)
+      //console.log('hello world')
+      headLine.textContent = article.headline
+      authorname.textContent = article.authorName
+      card.addEventListener('click', () => {
+      console.log(article.headline)
+      })
+      //console.log(card)
+      return card
+   // })
+  //})
+
+
+
 }
 
 const cardAppender = (selector) => {
@@ -28,6 +69,27 @@ const cardAppender = (selector) => {
   // Create a card from each and every article object in the response, using the Card component.
   // Append each card to the element in the DOM that matches the selector passed to the function.
   //
+  const entryPoint = document.querySelector(selector)
+  console.log(document.body.querySelector(selector))
+  console.log(entryPoint)
+  var sortable = [];
+  axios
+    .get(`https://lambda-times-api.herokuapp.com/articles`)
+    .then(res => {
+      //console.log(res.data.topics.length)
+      //console.log(res.data.articles)
+      for (let piece in res.data.articles) {
+        sortable.push([piece, res.data.articles[piece]]);
+        //console.log(piece)
+        for(let x in res.data.articles[piece])
+        {
+           const anewcard = Card(res.data.articles[piece][x])
+           entryPoint.appendChild(anewcard)
+        }
+      }
+    })
+    .catch(err => {
+      console.log(err)
+    });
 }
-
 export { Card, cardAppender }
